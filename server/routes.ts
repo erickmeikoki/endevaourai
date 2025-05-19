@@ -133,7 +133,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       for (const item of extractedItems) {
         const description = item.description.toLowerCase();
-        let matches = [];
+        let matches: { productId: string; productName: string; confidence: number }[] = [];
         
         if (description.includes("1/4-20") || description.includes("1/4\"")) {
           matches = [
