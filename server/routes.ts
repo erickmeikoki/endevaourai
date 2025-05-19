@@ -8,11 +8,9 @@ import {
   insertExtractedItemSchema, 
   insertMatchedItemSchema,
   DocumentExtractResponse,
-  LineItemMatch
+  LineItemMatch,
+  ExtractedLineItem
 } from "@shared/schema";
-
-const extractionApiURL = "https://extraction-api-endpoint.example.com";
-const matchingApiURL = "https://matching-api-endpoint.example.com";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API routes
@@ -74,21 +72,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Document not found" });
       }
 
-      // The real implementation would call the extraction API
-      // For interview purposes, we'll simulate with the named test documents
-      try {
-        // Call the extraction API
-        const response = await axios.get(`${extractionApiURL}?document=${document.name}`);
-        const extractionData = response.data as DocumentExtractResponse;
-
-        // Update document status
-        await storage.updateDocumentStatus(documentId, "extracted");
-
-        return res.json(extractionData);
-      } catch (error) {
-        console.error("Error calling extraction API:", error);
-        return res.status(500).json({ message: "Failed to extract document data" });
+      // Create mock extraction data based on document name
+      let extractedLineItems: ExtractedLineItem[] = [];
+      
+      if (document.name.includes("Easy")) {
+        extractedLineItems = [
+          { lineNumber: 1, description: "1/4-20 x 1-1/4 Hex Cap Screw Grade 5", quantity: 100, unitPrice: "$0.12", total: "$12.00" },
+          { lineNumber: 2, description: "3/8-16 x 2 Hex Bolt Grade 8 Yellow Zinc", quantity: 50, unitPrice: "$0.34", total: "$17.00" },
+          { lineNumber: 3, description: "1/2-13 Lock Nut Zinc Plated", quantity: 75, unitPrice: "$0.22", total: "$16.50" }
+        ];
+      } else if (document.name.includes("Medium")) {
+        extractedLineItems = [
+          { lineNumber: 1, description: "Hex Cap Screw 1/4-20 x 1-1/4 G5", quantity: 100, unitPrice: "$0.12", total: "$12.00" },
+          { lineNumber: 2, description: "Hex Bolt 3/8-16 x 2\" Yellow Zinc G8", quantity: 50, unitPrice: "$0.34", total: "$17.00" },
+          { lineNumber: 3, description: "Lock Nut, Zinc 1/2-13", quantity: 75, unitPrice: "$0.22", total: "$16.50" },
+          { lineNumber: 4, description: "Flat Washer 3/8\" USS", quantity: 100, unitPrice: "$0.08", total: "$8.00" }
+        ];
+      } else {
+        extractedLineItems = [
+          { lineNumber: 1, description: "G5 Hex Screw 1/4\"-20tpi x 1-1/4\"", quantity: 100, unitPrice: "$0.12", total: "$12.00" },
+          { lineNumber: 2, description: "G8 YZ bolt, hex head, 3/8\"-16 x 2\"", quantity: 50, unitPrice: "$0.34", total: "$17.00" },
+          { lineNumber: 3, description: "1/2 inch - 13 TPI zinc lock nut", quantity: 75, unitPrice: "$0.22", total: "$16.50" },
+          { lineNumber: 4, description: "USS Flat Washer, 3/8\"", quantity: 100, unitPrice: "$0.08", total: "$8.00" },
+          { lineNumber: 5, description: "Hex Nut, 1/4\"-20, G5", quantity: 120, unitPrice: "$0.10", total: "$12.00" }
+        ];
       }
+
+      // Update document status
+      await storage.updateDocumentStatus(documentId, "extracted");
+
+      return res.json({ lineItems: extractedLineItems });
     } catch (error) {
       console.error("Error extracting document:", error);
       return res.status(500).json({ message: "Failed to process document extraction" });
@@ -115,34 +128,65 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const extractedItems = extractedItemsSchema.parse(req.body);
 
-      // Call the matching API for each extracted item
-      try {
-        const matchResults: LineItemMatch[] = [];
+      // Generate mock matches based on extracted items
+      const matchResults: LineItemMatch[] = [];
 
-        for (const item of extractedItems) {
-          const response = await axios.post(matchingApiURL, {
-            description: item.description
-          });
-
-          matchResults.push({
-            lineNumber: item.lineNumber,
-            description: item.description,
-            quantity: item.quantity,
-            matches: response.data.matches
-          });
+      for (const item of extractedItems) {
+        const description = item.description.toLowerCase();
+        let matches = [];
+        
+        if (description.includes("1/4-20") || description.includes("1/4\"")) {
+          matches = [
+            { productId: "HCS1420114G5", productName: "1/4-20 x 1-1/4 Hex Cap Screw Grade 5", confidence: 98 },
+            { productId: "HCS1420112G5", productName: "1/4-20 x 1-1/2 Hex Cap Screw Grade 5", confidence: 85 },
+            { productId: "HCS1420100G5", productName: "1/4-20 x 1 Hex Cap Screw Grade 5", confidence: 80 }
+          ];
+        } else if (description.includes("3/8-16") || description.includes("3/8\"")) {
+          if (description.includes("bolt")) {
+            matches = [
+              { productId: "HB381620G8YZ", productName: "3/8-16 x 2 Hex Bolt Grade 8 Yellow Zinc", confidence: 95 },
+              { productId: "HB381620G8", productName: "3/8-16 x 2 Hex Bolt Grade 8", confidence: 85 },
+              { productId: "HB381620G5YZ", productName: "3/8-16 x 2 Hex Bolt Grade 5 Yellow Zinc", confidence: 75 }
+            ];
+          } else if (description.includes("washer")) {
+            matches = [
+              { productId: "FW38USS", productName: "3/8 Flat Washer USS", confidence: 90 },
+              { productId: "FW38SAE", productName: "3/8 Flat Washer SAE", confidence: 80 }
+            ];
+          }
+        } else if (description.includes("1/2-13") || description.includes("1/2\"") || description.includes("1/2 inch")) {
+          if (description.includes("lock") || description.includes("nut")) {
+            matches = [
+              { productId: "LN12130ZP", productName: "1/2-13 Lock Nut Zinc Plated", confidence: 82 },
+              { productId: "LN12130", productName: "1/2-13 Lock Nut", confidence: 75 },
+              { productId: "LN12130SS", productName: "1/2-13 Lock Nut Stainless Steel", confidence: 65 }
+            ];
+          }
+        }
+        
+        // If no specific matches found, provide some general options
+        if (matches.length === 0) {
+          matches = [
+            { productId: "HN1420G5", productName: "1/4-20 Hex Nut Grade 5", confidence: 70 },
+            { productId: "HN1420G2", productName: "1/4-20 Hex Nut Grade 2", confidence: 65 }
+          ];
         }
 
-        // Save matches to storage
-        await storage.saveLineItemMatches(documentId, matchResults);
-
-        // Update document status
-        await storage.updateDocumentStatus(documentId, "matched");
-
-        return res.json(matchResults);
-      } catch (error) {
-        console.error("Error calling matching API:", error);
-        return res.status(500).json({ message: "Failed to match document items" });
+        matchResults.push({
+          lineNumber: item.lineNumber,
+          description: item.description,
+          quantity: item.quantity,
+          matches
+        });
       }
+
+      // Save matches to storage
+      await storage.saveLineItemMatches(documentId, matchResults);
+
+      // Update document status
+      await storage.updateDocumentStatus(documentId, "matched");
+
+      return res.json(matchResults);
     } catch (error) {
       console.error("Error matching document:", error);
       return res.status(500).json({ message: "Failed to process document matching" });
