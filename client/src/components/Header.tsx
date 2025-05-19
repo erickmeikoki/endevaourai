@@ -1,5 +1,3 @@
-import { HelpCircle, FileSearch, Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import processLogo from "../assets/process-logo.png";
 
 export default function Header() {
@@ -23,20 +21,7 @@ export default function Header() {
             <p className="text-xs text-muted-foreground">Automated trade document analyzer</p>
           </div>
         </div>
-        <nav className="flex items-center space-x-1">
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary flex items-center">
-            <FileSearch className="h-5 w-5 sm:mr-1" />
-            <span className="hidden sm:inline">Documents</span>
-          </Button>
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary flex items-center">
-            <Settings className="h-5 w-5 sm:mr-1" />
-            <span className="hidden sm:inline">Settings</span>
-          </Button>
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary flex items-center">
-            <HelpCircle className="h-5 w-5 sm:mr-1" />
-            <span className="hidden sm:inline">Help</span>
-          </Button>
-        </nav>
+        {/* Navigation items removed as they don't have functionality */}
       </div>
     </header>
   );
