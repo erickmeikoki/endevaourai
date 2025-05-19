@@ -38,12 +38,7 @@ export default function Home() {
     { id: 4, title: "Export" }
   ];
 
-  // To avoid unused variable warnings
-  const stepsData = {
-    steps,
-    currentStep,
-    setCurrentStep
-  };
+  // Steps are defined above and used in the StepIndicator component
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-muted/30">

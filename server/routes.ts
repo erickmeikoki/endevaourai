@@ -1,13 +1,10 @@
 import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import axios from "axios";
+// Axios import removed - currently not needed
 import { z } from "zod";
 import { 
-  insertDocumentSchema, 
-  insertExtractedItemSchema, 
-  insertMatchedItemSchema,
-  DocumentExtractResponse,
+  insertDocumentSchema,
   LineItemMatch,
   ExtractedLineItem
 } from "@shared/schema";
