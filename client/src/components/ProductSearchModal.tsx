@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { X, Search } from "lucide-react";
 import { ExtractedLineItem, ProductMatch, CatalogProduct } from "@shared/schema";
 
@@ -23,8 +22,6 @@ export default function ProductSearchModal({
   productMatches
 }: ProductSearchModalProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [category, setCategory] = useState("");
-  const [sortBy, setSortBy] = useState("relevance");
   const [searchResults, setSearchResults] = useState<CatalogProduct[]>([]);
   const [isSearching, setIsSearching] = useState(false);
 
@@ -79,35 +76,7 @@ export default function ProductSearchModal({
             </Button>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div>
-              <Label className="block text-sm font-medium text-gray-700 mb-1">Category</Label>
-              <select 
-                className="w-full border border-gray-300 rounded-lg py-2 px-3"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option value="">All Categories</option>
-                <option value="bolts">Bolts</option>
-                <option value="screws">Screws</option>
-                <option value="nuts">Nuts</option>
-                <option value="washers">Washers</option>
-              </select>
-            </div>
-            <div>
-              <Label className="block text-sm font-medium text-gray-700 mb-1">Sort By</Label>
-              <select 
-                className="w-full border border-gray-300 rounded-lg py-2 px-3"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-              >
-                <option value="relevance">Relevance</option>
-                <option value="name_asc">Name (A-Z)</option>
-                <option value="name_desc">Name (Z-A)</option>
-                <option value="id_asc">Product ID (A-Z)</option>
-              </select>
-            </div>
-          </div>
+          {/* Advanced search options will be implemented in future versions */}
         </div>
         
         <div className="overflow-y-auto flex-grow p-4">

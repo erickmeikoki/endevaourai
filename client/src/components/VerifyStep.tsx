@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, Search } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ExtractedLineItem, LineItemMatch, ProductMatch } from "@shared/schema";
+import { LineItemMatch, ProductMatch, ExtractedLineItem } from "@shared/schema";
 
 interface VerifyStepProps {
   extractedItems: ExtractedLineItem[];
