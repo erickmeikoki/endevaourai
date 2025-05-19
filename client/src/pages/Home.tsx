@@ -46,16 +46,21 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-muted/30">
       <Header />
       
       <main className="flex-grow container mx-auto px-4 py-8">
+        <div className="mb-8 text-center">
+          <h2 className="gradient-text mb-2">Document Processing Workflow</h2>
+          <p className="text-muted-foreground">Complete these steps to extract and match data from purchase orders</p>
+        </div>
+        
         <StepIndicator 
           steps={steps} 
           currentStep={currentStep} 
         />
         
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-lg shadow-md p-6 border border-border">
           {currentStep === 1 && (
             <UploadStep 
               selectedDocument={selectedDocument}

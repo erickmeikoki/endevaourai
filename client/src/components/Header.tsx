@@ -1,24 +1,32 @@
-import { FileText } from "lucide-react";
+import { FileText, HelpCircle, FileSearch, Settings } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Header() {
   return (
-    <header className="bg-white shadow-md">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+    <header className="bg-white shadow-md sticky top-0 z-10">
+      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center">
-          <FileText className="text-primary mr-2" />
-          <h1 className="text-xl font-bold text-gray-800">Document Processing System</h1>
+          <div className="bg-primary/10 p-2 rounded-lg mr-3">
+            <FileText className="text-primary h-6 w-6" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold gradient-text">Document Processing System</h1>
+            <p className="text-xs text-muted-foreground">Automated trade document analyzer</p>
+          </div>
         </div>
-        <nav>
-          <button className="text-gray-600 hover:text-primary flex items-center">
-            <span className="mr-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-help-circle">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                <path d="M12 17h.01" />
-              </svg>
-            </span>
+        <nav className="flex items-center space-x-1">
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary flex items-center">
+            <FileSearch className="h-5 w-5 sm:mr-1" />
+            <span className="hidden sm:inline">Documents</span>
+          </Button>
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary flex items-center">
+            <Settings className="h-5 w-5 sm:mr-1" />
+            <span className="hidden sm:inline">Settings</span>
+          </Button>
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary flex items-center">
+            <HelpCircle className="h-5 w-5 sm:mr-1" />
             <span className="hidden sm:inline">Help</span>
-          </button>
+          </Button>
         </nav>
       </div>
     </header>
