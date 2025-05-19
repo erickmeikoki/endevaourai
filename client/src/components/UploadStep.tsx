@@ -75,8 +75,8 @@ export default function UploadStep({
         match them to products in your catalog.
       </p>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
+      <div className="grid grid-cols-1 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* File Uploader */}
           <div 
             className={`dropzone rounded-lg p-8 flex flex-col items-center justify-center cursor-pointer ${
@@ -103,59 +103,55 @@ export default function UploadStep({
             <p className="text-sm text-gray-400 mt-4">Supported format: PDF</p>
           </div>
           
-          {/* Test Documents */}
-          <div className="mt-6">
-            <h3 className="font-medium mb-2">Test Documents</h3>
-            <div className="bg-gray-50 p-4 rounded border border-gray-200">
-              <p className="text-sm text-gray-600 mb-2">For testing, use one of these sample documents:</p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                {testDocuments.map((category) => (
-                  <div key={category.category} className="text-sm">
-                    <p className="font-medium mb-1">{category.category}:</p>
-                    <ul className="list-disc pl-5 text-primary">
-                      {category.documents.map((doc) => (
-                        <li key={doc}>
-                          <button 
-                            className="hover:underline text-left text-primary"
-                            onClick={() => onDocumentSelect({ name: doc })}
-                          >
-                            {doc}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
+          {/* Instructions */}
+          <div className="bg-muted rounded-lg p-6 border border-border">
+            <h3 className="font-bold text-lg mb-3 font-mono gradient-text">Automated Document Processing</h3>
+            <ul className="space-y-3">
+              <li className="flex items-start">
+                <CheckCircle className="text-success mr-2 h-5 w-5 mt-0.5" />
+                <span>Extract line items from purchase orders automatically</span>
+              </li>
+              <li className="flex items-start">
+                <CheckCircle className="text-success mr-2 h-5 w-5 mt-0.5" />
+                <span>Match items to your product catalog with precision</span>
+              </li>
+              <li className="flex items-start">
+                <CheckCircle className="text-success mr-2 h-5 w-5 mt-0.5" />
+                <span>Verify and adjust matches as needed</span>
+              </li>
+              <li className="flex items-start">
+                <CheckCircle className="text-success mr-2 h-5 w-5 mt-0.5" />
+                <span>Export structured data for your systems</span>
+              </li>
+            </ul>
           </div>
         </div>
         
+        {/* Test Documents */}
         <div>
-          <img 
-            src="https://images.unsplash.com/photo-1581092335397-9583eb92d232?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
-            alt="Manufacturing document processing" 
-            className="rounded-lg shadow-lg w-full h-auto mb-4"
-          />
-          <h3 className="font-bold text-lg mb-2">Automate Your Document Processing</h3>
-          <ul className="space-y-2">
-            <li className="flex items-start">
-              <CheckCircle className="text-success mr-2 h-5 w-5 mt-0.5" />
-              <span>Extract line items from purchase orders automatically</span>
-            </li>
-            <li className="flex items-start">
-              <CheckCircle className="text-success mr-2 h-5 w-5 mt-0.5" />
-              <span>Match items to your product catalog with precision</span>
-            </li>
-            <li className="flex items-start">
-              <CheckCircle className="text-success mr-2 h-5 w-5 mt-0.5" />
-              <span>Verify and adjust matches as needed</span>
-            </li>
-            <li className="flex items-start">
-              <CheckCircle className="text-success mr-2 h-5 w-5 mt-0.5" />
-              <span>Export structured data for your systems</span>
-            </li>
-          </ul>
+          <h3 className="font-medium mb-2 font-mono">Test Documents</h3>
+          <div className="bg-gray-50 p-4 rounded border border-gray-200">
+            <p className="text-sm text-gray-600 mb-2">For testing, use one of these sample documents:</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              {testDocuments.map((category) => (
+                <div key={category.category} className="text-sm">
+                  <p className="font-medium mb-1">{category.category}:</p>
+                  <ul className="list-disc pl-5 text-primary">
+                    {category.documents.map((doc) => (
+                      <li key={doc}>
+                        <button 
+                          className="hover:underline text-left text-primary"
+                          onClick={() => onDocumentSelect({ name: doc })}
+                        >
+                          {doc}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
       
