@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle, Download, FileText, Code, TableProperties, Plus } from "lucide-react";
+import { ArrowLeft, CheckCircle, Download, Code, TableProperties, Plus } from "lucide-react";
 import { FinalMatchedItem } from "@shared/schema";
 
 interface ExportStepProps {
