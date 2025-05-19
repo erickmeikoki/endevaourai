@@ -13,9 +13,9 @@
   --card-foreground: 222 47% 11%;
   --border: 214 32% 91%;
   --input: 214 32% 91%;
-  --primary: 221 83% 53%;
-  --primary-light: 221 83% 96%;
-  --primary-dark: 224 76% 48%; 
+  --primary: 142 72% 50%;  /* Changed to green */
+  --primary-light: 142 72% 95%;
+  --primary-dark: 142 76% 38%; 
   --primary-foreground: 210 40% 98%;
   --secondary: 10 83% 56%;
   --secondary-light: 10 83% 96%;
@@ -28,7 +28,7 @@
   --success-foreground: 210 40% 98%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 210 40% 98%;
-  --ring: 221 83% 53%;
+  --ring: 142 72% 50%;  /* Changed to green */
   --radius: 0.5rem;
 }
 
@@ -43,7 +43,7 @@
   --card-foreground: 210 40% 98%;
   --border: 217 32% 17%;
   --input: 217 32% 17%;
-  --primary: 221 83% 53%;
+  --primary: 142 72% 50%;  /* Changed to green */
   --primary-foreground: 210 40% 98%;
   --secondary: 10 83% 56%;
   --secondary-foreground: 355 100% 97%;
@@ -53,7 +53,7 @@
   --success-foreground: 210 40% 98%;
   --destructive: 0 74% 42%;
   --destructive-foreground: 210 40% 98%;
-  --ring: 221 83% 53%;
+  --ring: 142 72% 50%;  /* Changed to green */
   --radius: 0.5rem;
 }
 
@@ -99,11 +99,11 @@
   }
   
   .gradient-text {
-    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary via-emerald-400 to-teal-500 bg-clip-text text-transparent;
   }
   
   .gradient-bg {
-    @apply bg-gradient-to-r from-primary to-secondary text-white;
+    @apply bg-gradient-to-r from-primary to-emerald-400 text-white;
   }
 }
 
