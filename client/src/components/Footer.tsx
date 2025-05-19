@@ -5,11 +5,7 @@ export default function Footer() {
         <div className="text-gray-600 text-sm mb-2 sm:mb-0">
           &copy; {new Date().getFullYear()} Document Processing System. All rights reserved.
         </div>
-        <div className="flex items-center space-x-4">
-          <a href="#" className="text-gray-600 hover:text-primary text-sm">Help Center</a>
-          <a href="#" className="text-gray-600 hover:text-primary text-sm">Privacy Policy</a>
-          <a href="#" className="text-gray-600 hover:text-primary text-sm">Terms of Service</a>
-        </div>
+        {/* Footer links removed as they don't have functionality */}
       </div>
     </footer>
   );

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle, Download, Code, TableProperties, Plus } from "lucide-react";
+import { ArrowLeft, CheckCircle, Download, Code, Plus } from "lucide-react";
 import { FinalMatchedItem } from "@shared/schema";
 
 interface ExportStepProps {
@@ -44,11 +44,7 @@ export default function ExportStep({
     document.body.removeChild(link);
   };
 
-  const handleDownloadExcel = () => {
-    // For real implementation, we would use a library like exceljs
-    // Since this is just a sample, we'll just use CSV for now
-    handleDownloadCSV();
-  };
+  // Excel download function removed as it's not needed
 
   const handleCopyJSON = () => {
     const jsonData = JSON.stringify(finalMatchedData, null, 2);
@@ -113,16 +109,7 @@ export default function ExportStep({
                 <span>Download CSV</span>
               </Button>
             </div>
-            <div>
-              <Button 
-                variant="outline"
-                className="w-full border-primary text-primary hover:bg-primary-light hover:bg-opacity-10 flex items-center justify-center"
-                onClick={handleDownloadExcel}
-              >
-                <TableProperties className="mr-2 h-4 w-4" />
-                <span>Download Excel</span>
-              </Button>
-            </div>
+            {/* Excel download removed as it duplicates CSV functionality */}
             <div>
               <Button 
                 variant="outline"
